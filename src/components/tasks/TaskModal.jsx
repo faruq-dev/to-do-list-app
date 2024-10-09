@@ -1,9 +1,34 @@
+import {useState} from "react";
+
 const TaskModal = () => {
+  const currentState = {
+    id: crypto.randomUUID(),
+    title: "",
+    description: "",
+    tags: [],
+    priority: "",
+    isFavorite: false,
+  }
+  const [task , setTask] = useState(currentState);
+
+  const changeHandler = (e)=>{
+    const name  =  e.target.name;
+    let value = e.target.value;
+
+    if(name === "tags"){
+      value = value.split(",")
+    }
+    setTask({
+      ...task,
+      [name]: value,
+    })
+  }
+
   return (
     <div id="parent" className="modal-bg" onClick={""}>
       <form
           className="modal-form"
-          onSubmit={""}
+          onSubmit={(e) => e.preventDefault()}
           // onClick={(e) => e.stopPropagation()}
         >
           <h2 className="text-center text-2xl font-bold text-white">
@@ -19,8 +44,8 @@ const TaskModal = () => {
                 type="text"
                 name="title"
                 id="title"
-                value={""}
-                onChange={""}
+                value={task.title}
+                onChange={changeHandler}
               />
             </div>
 
@@ -31,8 +56,8 @@ const TaskModal = () => {
                 type="text"
                 name="description"
                 id="description"
-                value={""}
-                onChange={""}
+                value={task.description}
+                onChange={changeHandler}
               ></textarea>
             </div>
 
@@ -44,8 +69,8 @@ const TaskModal = () => {
                   type="text"
                   name="tags"
                   id="tags"
-                  value={''}
-                  onChange={''}
+                  value={task.tags.join(",")}
+                  onChange={changeHandler}
                 />
               </div>
 
@@ -55,8 +80,8 @@ const TaskModal = () => {
                   className="modal-input-box text-white"
                   name="priority"
                   id="priority"
-                  value={''}
-                  onChange={''}
+                  value={task.priority}
+                  onChange={changeHandler}
                 >
                   <option value="">Select Priority</option>
                   <option value="Low">Low</option>
