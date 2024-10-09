@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .modal-bg {
+        @apply fixed inset-0 bg-gray-800 bg-opacity-80 min-h-screen z-50 flex items-center justify-center px-3
+    }
+    .modal-form {
+        @apply z-50 w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl bg-[#0B192C] dark:bg-[#262B28] border border-gray-200/40 dark:border-gray-600 rounded-lg p-8 space-y-6 overflow-auto max-h-full
+    }
+    .modal-input-box {
+        @apply block w-full rounded-md dark:bg-[#121A16] dark:text-white text-gray-700 bg-[#153448] px-3 py-2.5
+    }
+}
