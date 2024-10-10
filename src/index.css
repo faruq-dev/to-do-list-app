@@ -12,4 +12,10 @@
     .modal-input-box {
         @apply block w-full rounded-md text-white dark:bg-[#121A16] dark:text-white bg-[#153448] px-3 py-2.5
     }
+
+
+    /* Task Action Buttons Styling */
+    .task-act-btn {
+        @apply w-full sm:w-1/3 md:w-1/4 lg:w-1/6 bg-red-500 hover:bg-opacity-75 rounded-md px-3.5 py-2.5 text-sm font-semibold text-white
+    }
 }

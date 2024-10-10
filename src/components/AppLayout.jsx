@@ -1,6 +1,5 @@
 import Header from "./Header";
 import Taskboard from "./tasks/Taskboard";
-import TaskModal from "./tasks/TaskModal";
 
 const AppLayout = () => {
   return (
