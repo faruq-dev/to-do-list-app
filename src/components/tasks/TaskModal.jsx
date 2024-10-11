@@ -10,6 +10,7 @@ const TaskModal = ({toggleModal, submitModal}) => {
     isFavorite: false,
   };
   const [task, setTask] = useState(currentState);
+  const [errors, setErrors] = useState({})
 
   const changeHandler = (e) => {
     const name = e.target.name;
@@ -26,7 +27,32 @@ const TaskModal = ({toggleModal, submitModal}) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    submitModal(task, toggleModal);
+    
+    const newErrors = {};
+    if (!task.title.trim()){
+      newErrors.title = "Title is required"
+    };
+    
+    if (!task.description.trim()){
+      newErrors.description = "Description is required"
+    };
+
+    if (!task.priority.trim()){
+      newErrors.priority = "Priority is required"
+    };
+
+    if (!task.tags.length){
+      newErrors.tags = "At least one tag is required"
+    } else if (task.tags.length > 3) {
+      newErrors.tags = "Maximum 3 tags are allowed"
+    }
+    
+    //newErrors অবজেক্টের শুধু key গুলোক নিয়ে একটা অ্যারে তৈরী করে object.keys
+    if (Object.keys(newErrors).length > 0){
+      setErrors(newErrors);
+    } else {
+      submitModal(task, toggleModal);
+    }
   }
 
   return (
@@ -52,6 +78,9 @@ const TaskModal = ({toggleModal, submitModal}) => {
               value={task.title}
               onChange={changeHandler}
             />
+            {errors.title && (
+              <p className="text-red-500">{errors.title}</p>
+            )}
           </div>
 
           <div className="space-y-2 lg:space-y-3">
@@ -64,6 +93,9 @@ const TaskModal = ({toggleModal, submitModal}) => {
               value={task.description}
               onChange={changeHandler}
             ></textarea>
+            {errors.description && (
+              <p className="text-red-500">{errors.description}</p>
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 lg:gap-x-10 xl:gap-x-20 space-y-6 md:space-y-0">
@@ -77,6 +109,9 @@ const TaskModal = ({toggleModal, submitModal}) => {
                 value={task.tags.join(",")}
                 onChange={changeHandler}
               />
+              {errors.tags && (
+              <p className="text-red-500">{errors.tags}</p>
+            )}
             </div>
 
             <div className="space-y-2 lg:space-y-3">
@@ -93,6 +128,9 @@ const TaskModal = ({toggleModal, submitModal}) => {
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
               </select>
+              {errors.priority && (
+              <p className="text-red-500">{errors.priority}</p>
+            )}
             </div>
           </div>
         </div>
