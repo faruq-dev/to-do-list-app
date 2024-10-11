@@ -24,12 +24,17 @@ const TaskModal = ({toggleModal, submitModal}) => {
     });
   };
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    submitModal(task, toggleModal);
+  }
+
   return (
-    <div id="parent" className="modal-bg" onClick={""}>
+    <div id="parent" className="modal-bg" onClick={toggleModal}>
       <form
         className="modal-form"
-        onSubmit={(e) => e.preventDefault()}
-        // onClick={(e) => e.stopPropagation()}
+        onSubmit={submitHandler}
+        onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-center text-2xl font-bold text-white">
           Create Your To Do List
@@ -105,7 +110,6 @@ const TaskModal = ({toggleModal, submitModal}) => {
           <button
             type="submit"
             className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
-            onClick={()=> submitModal(task, toggleModal)}
           >
             Submit
           </button>

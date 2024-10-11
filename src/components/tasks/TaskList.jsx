@@ -30,7 +30,7 @@ const TaskList = ({ tasks }) => {
 
         {/* Table Body */}
         <tbody className="dark:text-white text-white even dark:[&>*:nth-child(even)]:bg-gray-800 [&>*:nth-child(even)]:bg-black/20">
-          {tasks.map(task => (
+          {tasks.length > 0 ? (tasks.map(task => (
             <tr
             key={task.id}
             className="[&>td]:align-baseline [&>td]:px-4 [&>td]:py-6"
@@ -60,7 +60,7 @@ const TaskList = ({ tasks }) => {
               </ul>
             </td>
 
-            <td className="text-center text-blue-500">{task.priority}</td>
+            <td className={`text-center ${task.priority === "High" ? "text-red-600" : task.priority === "Medium" ? "text-yellow-400" : "text-blue-600"}`}>{task.priority}</td>
 
             {/* Edit & Delete Button */}
             <td>
@@ -75,7 +75,14 @@ const TaskList = ({ tasks }) => {
             </td>
 
           </tr>
-          ))}
+          ))) : (
+            // Only visible if no task is available
+            <tr className="[&>td]:align-baseline [&>td]:px-4 [&>td]:py-32">
+              <td colSpan={6} className="text-red-400 text-center text-2xl">
+                No Tasks found...
+              </td>
+            </tr>
+          ) }
         </tbody>
       </table>
     </div>
