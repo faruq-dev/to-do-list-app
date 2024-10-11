@@ -23,6 +23,11 @@ const TaskModal = ({toggleModal, submitModal}) => {
       ...task,
       [name]: value,
     });
+
+    setErrors({
+      ...errors,
+      [name]: "",
+    })
   };
 
   const submitHandler = (e) => {
