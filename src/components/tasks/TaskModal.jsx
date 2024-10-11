@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const TaskModal = ({toggleModal}) => {
+const TaskModal = ({toggleModal, submitModal}) => {
   const currentState = {
     id: crypto.randomUUID(),
     title: "",
@@ -105,6 +105,7 @@ const TaskModal = ({toggleModal}) => {
           <button
             type="submit"
             className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
+            onClick={()=> submitModal(task, toggleModal)}
           >
             Submit
           </button>
