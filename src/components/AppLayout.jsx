@@ -12,14 +12,24 @@ const AppLayout = () => {
     isFavorite: false,
   };
   const [tasks, setTasks] = useState([]);
+  const [editingTask, setEditingTask] = useState(null); //State for editing task
 
   const submitModal = (task, toggleModal) => {
     // Add new task to the tasks array
     let isConfirmed = confirm("Are you sure you want to submit?");
     if (isConfirmed === true) {
-      setTasks([...tasks, task]);
-      // Reset the modal form
-      toggleModal();
+      if (editingTask) {
+        const updatedTask = tasks.map((prevTask) =>
+          prevTask.id === editingTask.id ? task : prevTask
+        );
+        setTasks(updatedTask);
+        setEditingTask(null);
+        toggleModal();
+      } else {
+        setTasks([...tasks, task]);
+        // Reset the modal form
+        toggleModal();
+      }
     } else {
       // Close the modal if user cancels
       toggleModal();
@@ -44,6 +54,7 @@ const AppLayout = () => {
       <Header />
       <div className="min-h-screen w-full bg-[#153448] px-5 lg:px-10 2xl:px-0">
         <Taskboard
+          setEditingTask={setEditingTask}
           tasks={tasks}
           submitModal={submitModal}
           deleteAll={deleteAllTasks}

@@ -1,15 +1,7 @@
 import { useState } from "react";
 
-const TaskModal = ({toggleModal, submitModal}) => {
-  const currentState = {
-    id: crypto.randomUUID(),
-    title: "",
-    description: "",
-    tags: [],
-    priority: "",
-    isFavorite: false,
-  };
-  const [task, setTask] = useState(currentState);
+const TaskModal = ({task, setTask, toggleModal, submitModal, editClicked}) => {
+  
   const [errors, setErrors] = useState({})
 
   const changeHandler = (e) => {
@@ -68,7 +60,7 @@ const TaskModal = ({toggleModal, submitModal}) => {
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-center text-2xl font-bold text-white">
-          Create Your To Do List
+          {editClicked ? "Edit Task" : "Create Your To Do List"}
         </h2>
 
         {/* Form Fields */}

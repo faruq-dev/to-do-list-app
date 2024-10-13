@@ -1,6 +1,6 @@
 import { FaStar } from 'react-icons/fa';
 
-const TaskList = ({ tasks }) => {
+const TaskList = ({ tasks, editHandler  }) => {
   return (
     <div className="h-[490px] overflow-auto border-[1px] border-white/20 rounded-xl">
       {/* Table for larger screens */}
@@ -68,7 +68,8 @@ const TaskList = ({ tasks }) => {
                 <button className="bg-red-500 text-white px-3 py-1 rounded-md">
                   Delete
                 </button>
-                <button className="bg-blue-500 text-white px-3 py-1 rounded-md">
+                <button className="bg-blue-500 text-white px-3 py-1 rounded-md"
+                onClick={()=>editHandler(task)}>
                   Edit
                 </button>
               </div>
