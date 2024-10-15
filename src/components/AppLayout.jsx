@@ -1,30 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./Header";
 import Taskboard from "./tasks/Taskboard";
+import { getLocalStorageData } from "../utilities/storage";
 
 const AppLayout = () => {
-  const defaultTask = {
-    id: crypto.randomUUID(),
-    title: "Learn JavaScript",
-    description: "Lorem ipsum dlor sit amet fazum gtimes",
-    tags: ["JavaScript", "React", "Vite"],
-    priority: "High",
-    isFavorite: false,
-  };
-  const [tasks, setTasks] = useState([]);
+  // const defaultTask = {
+  //   id: crypto.randomUUID(),
+  //   title: "Learn JavaScript",
+  //   description: "Lorem ipsum dlor sit amet fazum gtimes",
+  //   tags: ["JavaScript", "React", "Vite"],
+  //   priority: "High",
+  //   isFavorite: false,
+  // };
+  const [tasks, setTasks] = useState(getLocalStorageData());
   const [editingTask, setEditingTask] = useState(null); //State for editing task
+
+  useEffect(()=>{
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
 
   const submitModal = (task, toggleModal) => {
     // Add new task to the tasks array
     let isConfirmed = confirm("Are you sure you want to submit?");
     if (isConfirmed === true) {
-      if (editingTask) {
+      if (editingTask) { //This if block is related to editing task
         const updatedTask = tasks.map((prevTask) =>
           prevTask.id === editingTask.id ? task : prevTask
         );
+
         setTasks(updatedTask);
         setEditingTask(null);
         toggleModal();
+        
       } else {
         setTasks([...tasks, task]);
         // Reset the modal form
