@@ -14,6 +14,7 @@ const AppLayout = () => {
   // };
   const [tasks, setTasks] = useState(getLocalStorageData());
   const [editingTask, setEditingTask] = useState(null); //State for editing task
+  // const [taskToDelete, setTaskToDelete] = useState(null);
 
   useEffect(()=>{
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -56,6 +57,17 @@ const AppLayout = () => {
     }
   };
 
+  // This function deletes a single task
+  const deleteSingleTask = (task)=> {
+    let isConfirmed = confirm("Are you sure you want to delete")
+    if (isConfirmed) {
+      const updatedtasks = tasks.filter((prevTask)=>{
+        return prevTask.id !== task.id
+      })
+      setTasks(updatedtasks);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -65,6 +77,7 @@ const AppLayout = () => {
           tasks={tasks}
           submitModal={submitModal}
           deleteAll={deleteAllTasks}
+          deleteSingle={deleteSingleTask}
         />
       </div>
     </>

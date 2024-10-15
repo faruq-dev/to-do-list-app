@@ -1,6 +1,6 @@
 import { FaStar } from 'react-icons/fa';
 
-const TaskList = ({ tasks, editHandler  }) => {
+const TaskList = ({ tasks, editHandler, deleteSingle  }) => {
   return (
     <div className="h-[490px] overflow-auto border-[1px] border-white/20 rounded-xl">
       {/* Table for larger screens */}
@@ -64,11 +64,12 @@ const TaskList = ({ tasks, editHandler  }) => {
 
             {/* Edit & Delete Button */}
             <td>
-              <div className="flex items-center justify-center space-x-3">
-                <button className="bg-red-500 text-white px-3 py-1 rounded-md">
+              <div className="flex items-center justify-between">
+                <button className="bg-red-500 text-white px-6 py-2 rounded-md mr-3"
+                onClick={()=>deleteSingle(task)}>
                   Delete
                 </button>
-                <button className="bg-blue-500 text-white px-3 py-1 rounded-md"
+                <button className="bg-blue-500 text-white px-6 py-2 rounded-md"
                 onClick={()=>editHandler(task)}>
                   Edit
                 </button>
