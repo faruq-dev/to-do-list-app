@@ -46,7 +46,7 @@ const Taskboard = ({tasks, submitModal, deleteAll, setEditingTask, deleteSingle}
     )}
     
     <section id="tasks" className="max-w-[1320px] mx-auto pt-36">
-      <h1 className="text-center text-[32px] font-semibold mt-12 mb-8">Create Your To Do List</h1>
+      <h1 className="text-center text-[32px] font-semibold mt-12 mb-8 text-black dark:text-white">Create Your To Do List</h1>
 
       <TaskList tasks={tasks} editHandler={editHandler} deleteSingle={deleteSingle} />
 

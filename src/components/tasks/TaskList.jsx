@@ -2,11 +2,11 @@ import { FaStar } from 'react-icons/fa';
 
 const TaskList = ({ tasks, editHandler, deleteSingle  }) => {
   return (
-    <div className="h-[490px] overflow-auto border-[1px] border-white/20 rounded-xl">
+    <div className="h-[490px] overflow-auto dark:border-[1px]  dark:border-white/20 bg-white dark:bg-transparent rounded-xl">
       {/* Table for larger screens */}
       <table className="hidden sm:table table-fixed">
         {/* Table Heading */}
-        <thead className="dark:bg-[#121A16] bg-slate-700 sticky top-0">
+        <thead className="dark:bg-[#334155] bg-slate-700 sticky top-0">
           <tr>
             <th className="p-6 text-sm font-semibold capitalize w-[48px]"></th>
             <th className="p-6 text-sm font-semibold capitalize w-[300px] text-left">
@@ -29,7 +29,7 @@ const TaskList = ({ tasks, editHandler, deleteSingle  }) => {
 
 
         {/* Table Body */}
-        <tbody className="dark:text-white text-white even dark:[&>*:nth-child(even)]:bg-gray-800 [&>*:nth-child(even)]:bg-black/20">
+        <tbody className="dark:text-white text-black dark:[&>*:nth-child(even)]:bg-[#1A3B51] [&>*:nth-child(even)]:bg-[#D1D5DB]">
           {tasks.length > 0 ? (tasks.map(task => (
             <tr
             key={task.id}

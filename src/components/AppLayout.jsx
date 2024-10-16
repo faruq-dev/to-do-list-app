@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "./Header";
 import Taskboard from "./tasks/Taskboard";
-import { getLocalStorageData } from "../utilities/storage";
+import { getLocalStorageData, getThemeData } from "../utilities/storage";
 
 const AppLayout = () => {
   // const defaultTask = {
@@ -14,11 +14,20 @@ const AppLayout = () => {
   // };
   const [tasks, setTasks] = useState(getLocalStorageData());
   const [editingTask, setEditingTask] = useState(null); //State for editing task
-  // const [taskToDelete, setTaskToDelete] = useState(null);
+  const [theme, setTheme] = useState(getThemeData());
+  
+  useEffect(()=>{
+    localStorage.setItem('theme', theme);
+    document.documentElement.className = theme;
+  }, [theme]);
 
   useEffect(()=>{
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
+
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  }
 
   const submitModal = (task, toggleModal) => {
     // Add new task to the tasks array
@@ -59,19 +68,19 @@ const AppLayout = () => {
 
   // This function deletes a single task
   const deleteSingleTask = (task)=> {
-    let isConfirmed = confirm("Are you sure you want to delete")
+    let isConfirmed = confirm("Are you sure you want to delete?")
     if (isConfirmed) {
-      const updatedtasks = tasks.filter((prevTask)=>{
+      const tasksAfterDelete = tasks.filter((prevTask)=>{
         return prevTask.id !== task.id
       })
-      setTasks(updatedtasks);
+      setTasks(tasksAfterDelete);
     }
   };
 
   return (
     <>
-      <Header />
-      <div className="min-h-screen w-full bg-[#153448] px-5 lg:px-10 2xl:px-0">
+      <Header toggleTheme={toggleTheme} theme={theme} />
+      <div className="min-h-screen w-full bg-gray-100 dark:bg-[#153448] px-5 lg:px-10 2xl:px-0 transition-colors duration-700">
         <Taskboard
           setEditingTask={setEditingTask}
           tasks={tasks}
