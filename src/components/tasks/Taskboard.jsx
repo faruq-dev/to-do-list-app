@@ -3,7 +3,7 @@ import TaskActions from "./TaskActions"
 import TaskList from "./TaskList"
 import TaskModal from "./TaskModal"
 
-const Taskboard = ({tasks, submitModal, deleteAll, setEditingTask, deleteSingle}) => {
+const Taskboard = ({tasks, submitModal, deleteAll, setEditingTask, deleteSingle, toggleFavorite}) => {
   // State lifting up from Task Modal
   const currentState = {
     id: crypto.randomUUID(),
@@ -48,7 +48,8 @@ const Taskboard = ({tasks, submitModal, deleteAll, setEditingTask, deleteSingle}
     <section id="tasks" className="max-w-[1320px] mx-auto pt-36">
       <h1 className="text-center text-[32px] font-semibold mt-12 mb-8 text-black dark:text-white">Create Your To Do List</h1>
 
-      <TaskList tasks={tasks} editHandler={editHandler} deleteSingle={deleteSingle} />
+      <TaskList tasks={tasks} editHandler={editHandler} deleteSingle={deleteSingle} toggleFavorite={toggleFavorite}
+       />
 
       <TaskActions toggleModal={toggleModal} deleteAll={deleteAll}/>
     </section>

@@ -1,6 +1,6 @@
-import { FaStar } from 'react-icons/fa';
+import { FaStar } from "react-icons/fa";
 
-const TaskList = ({ tasks, editHandler, deleteSingle  }) => {
+const TaskList = ({ tasks, editHandler, deleteSingle, toggleFavorite }) => {
   return (
     <div className="h-[490px] overflow-auto dark:border-[1px]  dark:border-white/20 bg-white dark:bg-transparent rounded-xl">
       {/* Table for larger screens */}
@@ -27,64 +27,78 @@ const TaskList = ({ tasks, editHandler, deleteSingle  }) => {
           </tr>
         </thead>
 
-
         {/* Table Body */}
-        <tbody className="dark:text-white text-black dark:[&>*:nth-child(even)]:bg-[#1A3B51] [&>*:nth-child(even)]:bg-[#D1D5DB]">
-          {tasks.length > 0 ? (tasks.map(task => (
-            <tr
-            key={task.id}
-            className="[&>td]:align-baseline [&>td]:px-4 [&>td]:py-6"
-          >
-            <td>
-              <button>
-                <FaStar color="gray" />
-              </button>
-            </td>
+        <tbody className="dark:text-white text-black dark:[&>*:nth-child(even)]:bg-[#1A3B51] [&>*:nth-child(even)]:bg-[#efefef]">
+          {tasks.length > 0 ? (
+            tasks.map((task) => (
+              <tr
+                key={task.id}
+                className="[&>td]:align-baseline [&>td]:px-4 [&>td]:py-6"
+              >
+                <td>
+                  <button onClick={() => toggleFavorite(task.id)}>
+                    <FaStar color={`${task.isFavorite ? "orange" : "gray"}`} />
+                  </button>
+                </td>
 
-            <td>{task.title}</td>
+                <td>{task.title}</td>
 
-            <td className="text-justify">
-              <div>{task.description}</div>
-            </td>
+                <td className="text-justify">
+                  <div>{task.description}</div>
+                </td>
 
-            {/* Tags */}
-            <td>
-              <ul className="flex justify-center gap-1.5">
-                {task.tags.map((tag) => (
-                  <li key={tag}>
-                    <span className="inline-block whitespace-nowrap rounded-[45px] dark:bg-green-700 bg-green-600 px-3 py-1 text-sm capitalize text-white">
-                      {tag}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </td>
+                {/* Tags */}
+                <td>
+                  <ul className="flex justify-center gap-1.5">
+                    {task.tags.map((tag) => (
+                      <li key={tag}>
+                        <span className="inline-block whitespace-nowrap rounded-[45px] dark:bg-green-700 bg-green-600 px-3 py-1 text-sm capitalize text-white">
+                          {tag}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </td>
 
-            <td className={`text-center ${task.priority === "High" ? "text-red-600" : task.priority === "Medium" ? "text-yellow-400" : "text-blue-600"}`}>{task.priority}</td>
+                <td
+                  className={`text-center ${
+                    task.priority === "High"
+                      ? "text-red-600"
+                      : task.priority === "Medium"
+                      ? "text-orange-400"
+                      : "text-blue-600"
+                  }`}
+                >
+                  {task.priority}
+                </td>
 
-            {/* Edit & Delete Button */}
-            <td>
-              <div className="flex items-center justify-between">
-                <button className="bg-red-500 text-white px-6 py-2 rounded-md mr-3"
-                onClick={()=>deleteSingle(task)}>
-                  Delete
-                </button>
-                <button className="bg-blue-500 text-white px-6 py-2 rounded-md"
-                onClick={()=>editHandler(task)}>
-                  Edit
-                </button>
-              </div>
-            </td>
-
-          </tr>
-          ))) : (
+                {/* Edit & Delete Button */}
+                <td>
+                  <div className="flex items-center justify-between">
+                    <button
+                      className="bg-red-500 text-white px-6 py-2 rounded-md mr-3"
+                      onClick={() => deleteSingle(task)}
+                    >
+                      Delete
+                    </button>
+                    <button
+                      className="bg-blue-500 text-white px-6 py-2 rounded-md"
+                      onClick={() => editHandler(task)}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
             // Only visible if no task is available
             <tr className="[&>td]:align-baseline [&>td]:px-4 [&>td]:py-32">
               <td colSpan={6} className="text-red-400 text-center text-2xl">
                 No Tasks found...
               </td>
             </tr>
-          ) }
+          )}
         </tbody>
       </table>
     </div>

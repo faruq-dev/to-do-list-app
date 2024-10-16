@@ -25,6 +25,18 @@ const AppLayout = () => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
+  const toggleFavorite = (taskId) => {
+    const tasksAfterFavToggle = tasks.map((task)=>{
+      if (task.id === taskId) {
+        return {...task, isFavorite: !task.isFavorite}
+      }
+      return task;
+    });
+
+    setTasks(tasksAfterFavToggle);
+    // setIsFav(!isFav);
+  }
+
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   }
@@ -87,6 +99,7 @@ const AppLayout = () => {
           submitModal={submitModal}
           deleteAll={deleteAllTasks}
           deleteSingle={deleteSingleTask}
+          toggleFavorite={toggleFavorite}
         />
       </div>
     </>
