@@ -29,22 +29,22 @@ const AppLayout = () => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  // Searching ...
   useEffect(() => {
-    setFilteredTasks(tasks);
-  }, [tasks]);
-
-  //Searching Function
-  const handleSearch = (e) => {
-    const searchValue = e.target.value;
-    setSearchQuery(searchValue);
-    if (searchValue) {
+    if (searchQuery) {
       const filtered = tasks.filter((task) =>
-        task.title.toLowerCase().includes(searchValue.toLowerCase())
+        task.title.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setFilteredTasks(filtered);
     } else {
       setFilteredTasks(tasks);
     }
+  }, [searchQuery, tasks]);
+
+  //Searching Function
+  const handleSearch = (e) => {
+    const searchValue = e.target.value;
+    setSearchQuery(searchValue);
   };
 
   const toggleFavorite = (taskId) => {
