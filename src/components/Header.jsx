@@ -1,6 +1,6 @@
 import logo from "./../assets/assdi-logo.png";
 
-const Header = ({ toggleTheme, theme }) => {
+const Header = ({ toggleTheme, theme, handleSearch, searchQuery }) => {
   return (
     <div className="fixed top-0 w-full bg-gray-300 dark:bg-[#0B192C]  px-5 lg:px-10 2xl:px-0 transition-colors duration-500">
       <div className="max-w-[1320px] mx-auto py-9 flex flex-col md:flex-row gap-6 md:gap-0 justify-between items-center">
@@ -14,10 +14,10 @@ const Header = ({ toggleTheme, theme }) => {
           <div className="relative w-full md:w-auto">
             <input
               type="text"
-              // value={""}
-              // onChange={""}
+              value={searchQuery}
+              onChange={handleSearch}
               placeholder="Search Task ..."
-              className="bg-white px-4 py-3 rounded-lg w-full md:w-80 outline-none"
+              className="bg-white px-4 py-3 rounded-lg w-full md:w-80 outline-none text-black"
             />
             <div className="w-[25px] absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer opacity-85">
               <svg

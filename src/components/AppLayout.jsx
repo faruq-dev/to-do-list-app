@@ -13,8 +13,11 @@ const AppLayout = () => {
   //   isFavorite: false,
   // };
   const [tasks, setTasks] = useState(getLocalStorageData());
+  const [filteredTasks, setFilteredTasks] = useState(tasks);
   const [editingTask, setEditingTask] = useState(null); //State for editing task
   const [theme, setTheme] = useState(getThemeData());
+
+  const [searchQuery, setSearchQuery] = useState(""); //State for search query
   
   useEffect(()=>{
     localStorage.setItem('theme', theme);
@@ -24,6 +27,24 @@ const AppLayout = () => {
   useEffect(()=>{
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
+
+  useEffect(() => {
+    setFilteredTasks(tasks);
+  }, [tasks]);
+
+  //Searching Function
+  const handleSearch = (e)=>{
+    const searchValue = e.target.value;
+    setSearchQuery(searchValue);
+    if (searchValue){
+      const filtered = tasks.filter((task) =>
+        task.title.toLowerCase().includes(searchValue.toLowerCase()) 
+      );
+      setFilteredTasks(filtered);
+    } else{
+      setFilteredTasks(tasks);
+    }
+  };
 
   const toggleFavorite = (taskId) => {
     const tasksAfterFavToggle = tasks.map((task)=>{
@@ -91,7 +112,8 @@ const AppLayout = () => {
 
   return (
     <>
-      <Header toggleTheme={toggleTheme} theme={theme} />
+      <Header toggleTheme={toggleTheme} theme={theme}
+      handleSearch={handleSearch} searchQuery={searchQuery} />
       <div className="min-h-screen w-full bg-gray-100 dark:bg-[#153448] px-5 lg:px-10 2xl:px-0 transition-colors duration-700">
         <Taskboard
           setEditingTask={setEditingTask}
@@ -100,6 +122,7 @@ const AppLayout = () => {
           deleteAll={deleteAllTasks}
           deleteSingle={deleteSingleTask}
           toggleFavorite={toggleFavorite}
+          filteredTasks={filteredTasks}
         />
       </div>
     </>

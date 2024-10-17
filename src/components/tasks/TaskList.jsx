@@ -1,6 +1,6 @@
 import { FaStar } from "react-icons/fa";
 
-const TaskList = ({ tasks, editHandler, deleteSingle, toggleFavorite }) => {
+const TaskList = ({ editHandler, deleteSingle, toggleFavorite, filteredTasks }) => {
   return (
     <div className="h-[490px] overflow-auto dark:border-[1px]  dark:border-white/20 bg-white dark:bg-transparent rounded-xl">
       {/* Table for larger screens */}
@@ -29,8 +29,8 @@ const TaskList = ({ tasks, editHandler, deleteSingle, toggleFavorite }) => {
 
         {/* Table Body */}
         <tbody className="dark:text-white text-black dark:[&>*:nth-child(even)]:bg-[#1A3B51] [&>*:nth-child(even)]:bg-[#efefef]">
-          {tasks.length > 0 ? (
-            tasks.map((task) => (
+          {filteredTasks.length > 0 ? (
+            filteredTasks.map((task) => (
               <tr
                 key={task.id}
                 className="[&>td]:align-baseline [&>td]:px-4 [&>td]:py-6"
