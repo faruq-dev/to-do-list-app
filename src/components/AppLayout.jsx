@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "./Header";
 import Taskboard from "./tasks/Taskboard";
 import { getLocalStorageData, getThemeData } from "../utilities/storage";
+import Footer from "./Footer";
 
 const AppLayout = () => {
   // const defaultTask = {
@@ -18,14 +19,14 @@ const AppLayout = () => {
   const [theme, setTheme] = useState(getThemeData());
 
   const [searchQuery, setSearchQuery] = useState(""); //State for search query
-  
-  useEffect(()=>{
-    localStorage.setItem('theme', theme);
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
     document.documentElement.className = theme;
   }, [theme]);
 
-  useEffect(()=>{
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
   useEffect(() => {
@@ -33,40 +34,41 @@ const AppLayout = () => {
   }, [tasks]);
 
   //Searching Function
-  const handleSearch = (e)=>{
+  const handleSearch = (e) => {
     const searchValue = e.target.value;
     setSearchQuery(searchValue);
-    if (searchValue){
+    if (searchValue) {
       const filtered = tasks.filter((task) =>
-        task.title.toLowerCase().includes(searchValue.toLowerCase()) 
+        task.title.toLowerCase().includes(searchValue.toLowerCase())
       );
       setFilteredTasks(filtered);
-    } else{
+    } else {
       setFilteredTasks(tasks);
     }
   };
 
   const toggleFavorite = (taskId) => {
-    const tasksAfterFavToggle = tasks.map((task)=>{
+    const tasksAfterFavToggle = tasks.map((task) => {
       if (task.id === taskId) {
-        return {...task, isFavorite: !task.isFavorite}
+        return { ...task, isFavorite: !task.isFavorite };
       }
       return task;
     });
 
     setTasks(tasksAfterFavToggle);
     // setIsFav(!isFav);
-  }
+  };
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
-  }
+  };
 
   const submitModal = (task, toggleModal) => {
     // Add new task to the tasks array
     let isConfirmed = confirm("Are you sure you want to submit?");
     if (isConfirmed === true) {
-      if (editingTask) { //This if block is related to editing task
+      if (editingTask) {
+        //This if block is related to editing task
         const updatedTask = tasks.map((prevTask) =>
           prevTask.id === editingTask.id ? task : prevTask
         );
@@ -74,7 +76,6 @@ const AppLayout = () => {
         setTasks(updatedTask);
         setEditingTask(null);
         toggleModal();
-        
       } else {
         setTasks([...tasks, task]);
         // Reset the modal form
@@ -100,20 +101,24 @@ const AppLayout = () => {
   };
 
   // This function deletes a single task
-  const deleteSingleTask = (task)=> {
-    let isConfirmed = confirm("Are you sure you want to delete?")
+  const deleteSingleTask = (task) => {
+    let isConfirmed = confirm("Are you sure you want to delete?");
     if (isConfirmed) {
-      const tasksAfterDelete = tasks.filter((prevTask)=>{
-        return prevTask.id !== task.id
-      })
+      const tasksAfterDelete = tasks.filter((prevTask) => {
+        return prevTask.id !== task.id;
+      });
       setTasks(tasksAfterDelete);
     }
   };
 
   return (
     <>
-      <Header toggleTheme={toggleTheme} theme={theme}
-      handleSearch={handleSearch} searchQuery={searchQuery} />
+      <Header
+        toggleTheme={toggleTheme}
+        theme={theme}
+        handleSearch={handleSearch}
+        searchQuery={searchQuery}
+      />
       <div className="min-h-screen w-full bg-gray-100 dark:bg-[#153448] px-5 lg:px-10 2xl:px-0 transition-colors duration-700">
         <Taskboard
           setEditingTask={setEditingTask}
@@ -125,6 +130,7 @@ const AppLayout = () => {
           filteredTasks={filteredTasks}
         />
       </div>
+      <Footer/>
     </>
   );
 };
