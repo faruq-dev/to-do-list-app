@@ -1,10 +1,10 @@
-import logo from "./../assets/assdi-logo.png";
+import logo from "./../assets/Todoist_logo.png";
 
 const Header = ({ toggleTheme, theme, handleSearch, searchQuery }) => {
   return (
     <div className="fixed top-0 w-full bg-gray-300 dark:bg-[#0B192C]  px-5 lg:px-10 2xl:px-0 transition-colors duration-500">
       <div className="max-w-[1320px] mx-auto py-9 flex flex-col md:flex-row gap-6 md:gap-0 justify-between items-center">
-        <div className="max-w-60">
+        <div className="max-w-48">
           <img src={logo} alt="logo-file" />
         </div>
 
